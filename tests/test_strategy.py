@@ -26,26 +26,26 @@ class TestLimitedIntervalStrategy(unittest.TestCase):
     def test_when_request_is_allowed_it_increase_request_count(self):
         storage = {}
         stg = LimitedIntervalStrategy(now=self.now, storage=storage)
-        assert stg.request(), 'Expected to allow request'
+        assert stg.allow(), 'Expected to allow request'
         self.assertEqual(storage[stg.DEFAULT_KEY]['request_count'], 1)
 
     def test_when_request_count_pass_limit_blocks_request(self):
         stg = LimitedIntervalStrategy(requests=1, interval=10, now=self.now)
-        assert stg.request(), 'Expected first request to work'
-        assert not stg.request(), 'Expected second request to fail'
+        assert stg.allow(), 'Expected first request to work'
+        assert not stg.allow(), 'Expected second request to fail'
 
     def test_when_interval_pass_reset_request_count(self):
         storage = {}
         stg = LimitedIntervalStrategy(requests=1, interval=10, now=self.now, storage=storage)
-        stg.request()
+        stg.allow()
         self.now.seconds = 11
 
-        assert stg.request(), 'Expected request to work'
+        assert stg.allow(), 'Expected request to work'
         self.assertEqual(storage[stg.DEFAULT_KEY]['request_count'], 1)
 
     def test_remaining_time(self):
         stg = LimitedIntervalStrategy(requests=1, interval=10, now=self.now)
-        stg.request()
+        stg.allow()
         self.now.seconds = 4
 
         self.assertEqual(stg.get_remaining(), 6)

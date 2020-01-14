@@ -8,7 +8,7 @@ class LimitStrategy(metaclass=abc.ABCMeta):
     A request limit strategy abstract class
     """
     @abc.abstractmethod
-    def request(self, key: Optional[str] = None) -> bool:
+    def allow(self, key: Optional[str] = None) -> bool:
         """
         Checks if it can allocate one request
         :return: True if it can allocate else False
@@ -41,7 +41,7 @@ class LimitedIntervalStrategy(LimitStrategy):
         self.now = now
         self.storage = storage if storage is not None else {}
 
-    def request(self, key: Optional[str] = None) -> bool:
+    def allow(self, key: Optional[str] = None) -> bool:
         """
         Allocates one request in current window for the key
         :param key: Storage key

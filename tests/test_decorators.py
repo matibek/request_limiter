@@ -1,3 +1,4 @@
+import os
 import unittest
 from typing import Optional
 
@@ -7,16 +8,16 @@ from django.test import RequestFactory
 from request_limiter import request_limiter, LimitedIntervalStrategy, \
     LimitStrategy, LimitException, django_request_limiter
 
-
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'test_settings')
 req_factory = RequestFactory()
 
 
 class MockStrategy(LimitStrategy):
     def __init__(self, allow: bool):
-        self.allow = allow
+        self._allow = allow
 
-    def request(self, key: Optional[str] = None) -> bool:
-        return self.allow
+    def allow(self, key: Optional[str] = None) -> bool:
+        return self._allow
 
     def get_remaining(self, key: Optional[str] = None) -> float:
         return 1

@@ -29,6 +29,53 @@ Features
 * A decorator to limit django http request
 * A strategy to limit request per interval using requester IP
 
+Get started
+-----------
+
+Installation:
+
+.. code-block:: shell
+
+   $ pip install request_limiter
+
+Limit request to django view using a decorator:
+
+.. code-block:: python
+
+    from request_limiter import request_limiter, LimitedIntervalStrategy, django_request_limiter
+
+    @django_request_limiter
+    @request_limiter(strategy=LimitedIntervalStrategy(requests=10, interval=60))  # 10 request per minute
+    def myview(request):
+        # ...
+
+Limit the number of request to function or part of it:
+
+.. code-block:: python
+
+    from request_limiter import request_limiter, LimitedIntervalStrategy, LimitException
+
+    @request_limiter(strategy=LimitedIntervalStrategy(requests=1, interval=60))  # 1 request per minute
+    def awesome_work(param):
+        # ...
+
+    awesome_work("test")
+    try:
+        awesome_work("limited")  # raises LimitException
+    except LimitException:
+        # .. handle limit exception
+
+    limiter = LimitedIntervalStrategy(requests=1, interval=60))  # 1 request per minute
+
+    def another_work(param):
+        if not limiter.allow():
+            return False
+        # ...
+        return True
+
+    another_work("job1")  # returns True
+    another_work("job2")  # returns False
+
 Credits
 -------
 

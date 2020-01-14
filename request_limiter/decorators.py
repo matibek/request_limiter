@@ -34,7 +34,7 @@ class RequestLimiterDecorator(object):
             """
             with threading.RLock():  # Request in a tread safe way
                 key = kwargs.pop('limit_key', None)
-                if not self.strategy.request(key=key):  # Failed to allocate
+                if not self.strategy.allow(key=key):  # Failed to allocate
                     raise LimitException('Rate limit exceeded.', self.strategy)
 
             return f(*args, **kwargs)
@@ -57,5 +57,6 @@ def django_request_limiter(f):
             return f(request, *args, **kwargs)
         except LimitException as e:
             from django.http import HttpResponse
-            return HttpResponse(f'Rate limit exceeded. Try again in {e.strategy.get_remaining(ip)} seconds', status=429)
+            body = "Rate limit exceeded. Try again in {} seconds".format(e.strategy.get_remaining(ip))
+            return HttpResponse(body, status=429)
     return wrapper
