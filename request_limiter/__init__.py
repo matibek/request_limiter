@@ -5,7 +5,7 @@ from request_limiter.strategy import LimitStrategy, LimitedIntervalStrategy
 
 __author__ = """Mati Bekuma Terefe"""
 __email__ = 'matibek@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 request_limiter = RequestLimiterDecorator
 
