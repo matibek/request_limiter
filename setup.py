@@ -10,11 +10,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
+requirements = [ ]
 
 setup_requirements = [ ]
 
-test_requirements = [ ]
+test_requirements = ['Django>=2.0']
 
 setup(
     author="Mati Bekuma Terefe",
@@ -31,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Request limiter contains a decorator to limit hthe rate of http request",
+    description="Request limiter contains a decorator to limit the rate of http request",
     entry_points={
         'console_scripts': [
             'request_limiter=request_limiter.cli:main',

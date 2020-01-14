@@ -16,7 +16,7 @@ Request Limiter
 
 
 
-Request limiter contains a decorator to limit hthe rate of http request
+Request limiter contains a decorator to limit the rate of http request
 
 
 * Free software: MIT license
@@ -26,7 +26,8 @@ Request limiter contains a decorator to limit hthe rate of http request
 Features
 --------
 
-* TODO
+* A decorator to limit django http request
+* A strategy to limit request per interval using requester IP
 
 Credits
 -------

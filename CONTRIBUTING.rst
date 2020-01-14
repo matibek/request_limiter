@@ -68,6 +68,7 @@ Ready to contribute? Here's how to set up `request_limiter` for local developmen
 
     $ mkvirtualenv request_limiter
     $ cd request_limiter/
+    $ pip install -r requirements_dev.txt
     $ python setup.py develop
 
 4. Create a branch for local development::
@@ -79,9 +80,9 @@ Ready to contribute? Here's how to set up `request_limiter` for local developmen
 5. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-    $ flake8 request_limiter tests
-    $ python setup.py test or pytest
-    $ tox
+    $ make lint
+    $ make test
+    $ make test-all
 
    To get flake8 and tox, just pip install them into your virtualenv.
 
